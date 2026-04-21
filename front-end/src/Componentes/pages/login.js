@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  const [email, setEmail] = useState(''); // Se usará para Email o para RUDE
+  const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
-  const [modoEstudiante, setModoEstudiante] = useState(false); // Switch entre Admin y Estudiante
+  const [modoEstudiante, setModoEstudiante] = useState(false); 
   const [error, setError] = useState('');
   
   const navigate = useNavigate();
+  const BASE_URL = 'https://tu-api-laravel.onrender.com'; 
 
   const manejarEnvio = async (e) => {
       e.preventDefault();
       setError('');
 
+    
       const rutaApi = modoEstudiante 
-        ? 'http://localhost:8000/api/login-estudiante' 
-        : 'http://localhost:8000/api/login';
+        ? `${BASE_URL}/api/login-estudiante` 
+        : `${BASE_URL}/api/login`;
 
     try {
           const respuesta = await fetch(rutaApi, {
@@ -27,32 +29,26 @@ function Login() {
             body: JSON.stringify({
             [modoEstudiante ? 'rude' : 'email']: email,
             password: password
-})
+            })
           });
           
-
       const texto = await respuesta.text();
-      
-      // 2. Aquí declaramos 'datos' UNA SOLA VEZ (Esta es la línea 37 que te da error)
       const datos = texto ? JSON.parse(texto) : {};
 
       if (respuesta.ok) {
-              // Guardamos todo en el baúl del navegador
               localStorage.setItem('token', datos.access_token);
               localStorage.setItem('usuario', JSON.stringify(datos.usuario));
               localStorage.setItem('rol', modoEstudiante ? 'estudiante' : 'admin');
 
               alert(`¡Bienvenido ${modoEstudiante ? 'Estudiante' : 'Administrador'}!`);
-              
-              // Redirección inteligente
               navigate(modoEstudiante ? '/perfil-estudiante' : '/productos');
             } else {
-              // Si Laravel dice 401, 422 o 500, mostramos el mensaje que viene del "cerebro"
               setError(datos.error || datos.message || 'Credenciales incorrectas');
             }
           } catch (err) {
             console.error("Detalle del error:", err);
-            setError('Error de red: Asegúrate de que el servidor Laravel esté encendido (php artisan serve).'); 
+            // Actualizamos el mensaje de error para que sea más acorde a internet
+            setError('Error de conexión: No se pudo contactar con el servidor de la institución.'); 
           }
         };
 
@@ -79,7 +75,7 @@ function Login() {
                   <input 
                     type="text" 
                     className="form-control" 
-                    placeholder={modoEstudiante ? "Ej: 806700012023..." : "admin@luzdelhimalaya.com"} // <-- Actualizado
+                    placeholder={modoEstudiante ? "Ej: 806700012023..." : "admin@luzdelhimalaya.com"}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required 
@@ -104,7 +100,6 @@ function Login() {
 
                 <hr />
 
-                {/* BOTÓN PARA CAMBIAR DE MODO */}
                 <button 
                   type="button" 
                   className={`btn w-100 fw-bold ${modoEstudiante ? 'btn-outline-dark' : 'btn-outline-secondary'}`}
