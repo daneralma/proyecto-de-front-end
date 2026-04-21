@@ -8,7 +8,7 @@ function Login() {
   const [error, setError] = useState('');
   
   const navigate = useNavigate();
-  const BASE_URL = 'https://tu-api-laravel.onrender.com'; 
+  const BASE_URL = 'https://proyecto-de-back-laravel.onrender.com'; 
 
   const manejarEnvio = async (e) => {
       e.preventDefault();

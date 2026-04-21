@@ -11,13 +11,13 @@ function RegistroEstudiante() {
   const manejarEnvio = async (e) => {
     e.preventDefault();
     try {
-        const respuesta = await fetch('http://127.0.0.1:8000/api/estudiantes', {
+        const BASE_URL = 'https://proyecto-de-back-laravel.onrender.com'; 
+        const respuesta = await fetch(`${BASE_URL}/api/estudiantes`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                // Esta línea es la "llave" que abre el permiso en Laravel
-                'Authorization': `Bearer ${localStorage.getItem('access_token') || localStorage.getItem('token')}` 
+                'Authorization': `Bearer ${localStorage.getItem('token')}` 
             },
             body: JSON.stringify(formData)
         });
@@ -36,6 +36,12 @@ function RegistroEstudiante() {
         alert('Error al conectar con el servidor');
     }
   };
+
+// 1. Definimos la URL de Render (como hicimos en el Login)
+
+
+
+
 
   return (
     <div className="container mt-5">

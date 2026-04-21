@@ -5,7 +5,7 @@ const Cuotas = () => {
     "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre"
   ];
-
+  const BASE_URL = 'https://proyecto-de-back-laravel.onrender.com';
   const [estudianteId, setEstudianteId] = useState('');
   const [mesesSeleccionados, setMesesSeleccionados] = useState([]);
   const montoPorMes = 200; // Precio de pensión en Luz del Himalaya
@@ -32,30 +32,32 @@ const Cuotas = () => {
     };
 
     try {
-      const respuesta = await fetch('http://127.0.0.1:8000/api/pagos/registrar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('access_token') || localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(datos)
-      });
+          // 2. Usar la BASE_URL aquí
+          const respuesta = await fetch(`${BASE_URL}/api/pagos/registrar`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // Mantenemos tu lógica de token que está perfecta
+              'Authorization': `Bearer ${localStorage.getItem('access_token') || localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(datos)
+          });
 
-      // --- EL BLOQUE CORREGIDO AHORA ESTÁ AQUÍ ADENTRO ---
-      if (respuesta.ok) {
-        alert("¡Pago guardado con éxito!");
-        setMesesSeleccionados([]); // Limpia los checkboxes
-        setEstudianteId('');      // Limpia el campo de ID
-      } else {
-        const errorServidor = await respuesta.json();
-        alert("Error: " + (errorServidor.error || "No se pudo registrar el pago"));
-      }
-      // -------------------------------------------------
+          if (respuesta.ok) {
+            alert("¡Pago guardado con éxito!");
+            setMesesSeleccionados([]); 
+            setEstudianteId('');      
+          } else {
+            const errorServidor = await respuesta.json();
+            alert("Error: " + (errorServidor.error || "No se pudo registrar el pago"));
+          }
 
-    } catch (error) {
-      alert("Error al conectar con Laravel. Verifica que php artisan serve esté activo.");
-    }
-  };
+        } catch (error) {
+          // 3. Mensaje de error más profesional para la nube
+          console.error("Error de conexión:", error);
+          alert("Error de conexión: No se pudo contactar con el servidor de pagos.");
+        }
+    };
 
   return (
     <div className="container mt-4 pb-5">

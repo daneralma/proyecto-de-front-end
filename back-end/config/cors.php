@@ -1,24 +1,23 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     */
 
-    // 1. Cubrimos todas las rutas que empiezan con /api/
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
-
-    // 2. Aquí incluimos todos los puertos que React suele usar
+    // Juntamos todas las URLs permitidas en una sola lista
     'allowed_origins' => [
-        'http://localhost:3000',
+        'https://proyecto-de-front-end.onrender.com', // Tu sitio en internet
+        'http://localhost:3000',                     // Tu PC (desarrollo)
         'http://localhost:3001',
         'http://localhost:3003',
     ],
+
+    'allowed_methods' => ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -28,7 +27,5 @@ return [
 
     'max_age' => 0,
 
-    // 3. Importante para que Sanctum y los tokens funcionen correctamente
     'supports_credentials' => true,
-
 ];
