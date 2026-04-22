@@ -2,18 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\EstudianteController;
-
-// ... (el resto de tus rutas abajo)
+use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Estudiante;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Administrador
+        // 1. Crear Administrador (en la tabla users)
         User::create([
             'name' => 'Admin Colegio',
             'email' => 'admin@luzdelhimalaya.com',
@@ -21,12 +19,15 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        // Estudiante
+        // 2. Crear Estudiante de prueba (en la tabla estudiantes)
+        // Asegúrate de que tu modelo se llame 'Estudiante'
         Estudiante::create([
             'nombre_completo' => 'Juan Perez',
-            'rude' => 'juan@estudiante.com',
+            'rude' => '12345678', // Usa el RUDE real para probar
             'password' => Hash::make('rude123'),
             'curso' => '6to de Secundaria'
         ]);
+        
+     
     }
 }

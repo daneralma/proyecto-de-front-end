@@ -28,4 +28,8 @@ class Estudiante extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+    public function cuotas()
+    {
+    return $this->hasMany(Cuota::class, 'estudiante_id');
+    }
 }

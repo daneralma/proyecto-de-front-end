@@ -6,7 +6,7 @@ function Home() {
 
   useEffect(() => {
     // 1. Petición a Laravel
-    fetch('http://localhost:8000/api/saludo') // <-- Usa la ruta de prueba
+    fetch('https://proyecto-de-back-laravel.onrender.com') // <-- Usa la ruta de prueba
       .then(respuesta => respuesta.json())
       .then(datos => setDatosBackEnd(datos.mensaje))
       .catch(error => console.error("Error conectando con Laravel:", error));
