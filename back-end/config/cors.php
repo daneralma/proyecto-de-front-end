@@ -9,13 +9,8 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    // Juntamos todas las URLs permitidas en una sola lista
-    'allowed_origins' => [
-        'https://proyecto-de-front-end.onrender.com', // Tu sitio en internet
-        'http://localhost:3000',                     // Tu PC (desarrollo)
-        'http://localhost:3001',
-        'http://localhost:3003',
-    ],
+    // Usamos el asterisco para asegurar que conecte desde cualquier lado mientras pruebas
+    'allowed_origins' => ['*'], 
 
     'allowed_methods' => ['*'],
 
@@ -27,5 +22,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    // IMPORTANTE: Debe ser false si usas el comodín '*' arriba
+    'supports_credentials' => false,
 ];
