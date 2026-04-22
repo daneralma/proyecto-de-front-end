@@ -19,14 +19,13 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             
-            // Columna para distinguir entre Admin y Estudiante
-            $table->string('rol')->default('estudiante'); 
+            // Usamos 'role' para que coincida con tu Seeder y evitemos el error SQL
+            $table->string('role')->default('estudiante'); 
             
             $table->rememberToken();
             $table->timestamps();
         });
 
-        // Tablas auxiliares de Laravel (Password reset y Sessions)
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -46,7 +45,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function up_down(): void
+    public function down(): void
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');

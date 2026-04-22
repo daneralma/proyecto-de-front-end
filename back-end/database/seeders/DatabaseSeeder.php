@@ -12,11 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Crear Administrador (en la tabla users)
+        // DatabaseSeeder.php
         User::create([
             'name' => 'Admin Colegio',
             'email' => 'admin@luzdelhimalaya.com',
             'password' => Hash::make('admin123'),
-            'role' => 'admin',
+            'role' => 'admin', // <--- Asegúrate que diga 'role' con E
         ]);
 
         // 2. Crear Estudiante de prueba (en la tabla estudiantes)
