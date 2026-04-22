@@ -16,12 +16,14 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Admin Colegio',
             'email' => 'admin@luzdelhimalaya.com',
-            'password' => Hash::make('admin123'),
+            // Debe estar así:
+            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
             'role' => 'admin', // <--- Asegúrate que diga 'role' con E
         ]);
 
         // 2. Crear Estudiante de prueba (en la tabla estudiantes)
         // Asegúrate de que tu modelo se llame 'Estudiante'
+
         Estudiante::create([
             'nombre_completo' => 'Juan Perez',
             'rude' => '12345678', // Usa el RUDE real para probar
